@@ -12,7 +12,7 @@ function create_and_return_text_message
     l_message varchar2(4000) :=  gc_developer_todo_message || p_constraint_name ;
 begin
    apex_lang.create_message
-      (p_application_id  => v('APP_ID'),
+      (p_application_id  => v('APP_ID'), /* This could be a common text library application */
        p_name            => p_constraint_name,
        p_language        => nvl(apex_util.get_preference('FSP_LANGUAGE_PREFERENCE'), 'en'),
        p_message_text    => l_message 
@@ -96,9 +96,10 @@ begin
             */
 
             -- Instant Tip - Error handler function 
+            -- Hat tip to Roel https://roelhartman.blogspot.com/2021/02/stop-using-validations-for-checking.html
             -- Random Thoughts: I need to 'develop' some patience...fast... - Demetri Martin
 
-            l_result.message := apex_lang.message(l_constraint_name);
+            l_result.message := apex_lang.message(l_constraint_name); /* This could be from a common text library application */
                         
             if l_result.message = l_constraint_name then
                l_result.message := create_and_return_text_message (p_constraint_name => l_constraint_name);
